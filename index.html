@@ -327,7 +327,7 @@ async function callAPI(userText, newCards) {
       'X-Title': 'Arcana Tarot'
     },
     body: JSON.stringify({
-      model: 'mistralai/mistral-7b-instruct:free',
+      model: 'meta-llama/llama-4-scout:free',
       max_tokens: 1000,
       messages: [
         {role: 'system', content: SYSTEM},
