@@ -317,21 +317,27 @@ async function callAPI(userText, newCards) {
 
   history.push({role:'user', content});
 
-  const res = await fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST', headers:{
-      'Content-Type':'application/json',
-      'x-api-key':'YOUR_API_KEY_HERE',
-      'anthropic-version':'2023-06-01',
-      'anthropic-dangerous-direct-browser-access':'true'
+  const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer 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',
+      'HTTP-Referer': 'https://phgnhug.github.io/Arcana',
+      'X-Title': 'Arcana Tarot'
     },
     body: JSON.stringify({
-      model:'claude-sonnet-4-20250514', max_tokens:1000,
-      system: SYSTEM, messages: history
+      model: 'anthropic/claude-sonnet-4-5',
+      max_tokens: 1000,
+      messages: [
+        {role: 'system', content: SYSTEM},
+        ...history
+      ]
     })
   });
+
   const data = await res.json();
-  const raw = data.content?.map(b=>b.text||'').join('')||'';
-  history.push({role:'assistant', content:raw});
+  const raw = data.choices?.[0]?.message?.content || '';
+  history.push({role:'assistant', content: raw});
   return raw;
 }
 
