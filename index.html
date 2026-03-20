@@ -306,6 +306,7 @@ function renderReading(cards, r) {
 }
 
 /* API */
+/* API */
 async function callAPI(userText, newCards) {
   const lang = detectLang(userText);
   document.getElementById('lang-badge').textContent=(LANG_NAMES[lang]||'AUTO').substring(0,3).toUpperCase();
@@ -326,7 +327,7 @@ async function callAPI(userText, newCards) {
       'X-Title': 'Arcana Tarot'
     },
     body: JSON.stringify({
-      model: 'anthropic/claude-sonnet-4-5',
+      model: 'meta-llama/llama-3.3-8b-instruct:free',
       max_tokens: 1000,
       messages: [
         {role: 'system', content: SYSTEM},
@@ -340,7 +341,6 @@ async function callAPI(userText, newCards) {
   history.push({role:'assistant', content: raw});
   return raw;
 }
-
 /* MAIN */
 async function send() {
   const q = qEl.value.trim();
